@@ -1,0 +1,58 @@
+name: Deploy AKS with ACR and Ingress
+
+on:
+  workflow_dispatch:
+
+env:
+  TF_VERSION: '1.6.0'
+  AZURE_REGION: 'eastus'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ env.TF_VERSION }}
+
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Terraform Init
+      run: |
+        cd infra
+        terraform init
+
+    - name: Terraform Apply
+      run: |
+        cd infra
+        terraform apply -auto-approve
+    
+    - name: Get AKS credentials
+      run: az aks get-credentials --resource-group $RG --name $CLUSTER_NAME --admin
+
+    - name: Set up Helm
+      uses: azure/setup-helm@v3
+    
+    - name: Install NGINX Ingress Controller
+      run: |
+        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+        helm repo update
+
+        helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+          --namespace ingress-nginx --create-namespace \
+          --set controller.replicaCount=2 \
+          --set controller.nodeSelector."kubernetes\\.io/os"=linux \
+          --set controller.ingressClass=nginx \
+          --set controller.ingressClassResource.name=nginx \
+          --set controller.ingressClassResource.enabled=true \
+          --set controller.service.internal.enabled=true \
+          --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"="true"
+
