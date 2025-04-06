@@ -66,8 +66,8 @@ az ad sp create-for-rbac --name "gh-aks-deployer" \
 
 2. Save output to GitHub Secrets:
 
-Go to your GitHub repo → Settings → Secrets → Actions
-Create secret AZURE_CREDENTIALS with full JSON output
+Go to your GitHub repo → Settings → Secrets → Actions.
+Create secret `AZURE_CREDENTIALS` with full JSON output
 
 ## Deploy Infrastructure by Manual Trigger
 To run the Azure infrastructure provisioning pipeline go to GitHub repo → Actions → Deploy AKS with ACR and Ingress and click Run workflow. This will provision on Azure:
@@ -99,7 +99,7 @@ Verify app’s ingress with:
 kubectl get ingress
 ```
 
-#####  Deploy Application 
+# Deploy Application 
 
 ## GitHub Actions CI/CD Flow
 Deploys the Next.js app with Helm Chart
