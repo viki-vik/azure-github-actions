@@ -25,6 +25,14 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+    - name: Terraform Validate
+      run: cd infra && terraform validate
+
+    - name: Static Analysis with tfsec
+      uses: aquasecurity/tfsec-action@v1
+      with:
+        working-directory: infra/
+
     - name: Terraform Init
       run: |
         cd infra
