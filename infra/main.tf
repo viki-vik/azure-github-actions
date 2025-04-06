@@ -3,8 +3,8 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = "aks-private-rg"
-  location = var.location
+  name     = "nextjs-dev-aks-private-rg"
+  location = local.location
 }
 
 module "network" {
@@ -18,22 +18,22 @@ module "network" {
 module "dns" {
   source              = "./modules/dns"
   resource_group_name = azurerm_resource_group.main.name
-  location            = var.location
-  cluster_name        = var.cluster_name
+  location            = local.location
+  cluster_name        = local.cluster_name
 }
 
 module "acr" {
   source              = "./modules/acr"
   resource_group_name = azurerm_resource_group.main.name
-  location            = var.location
+  location            = local.location
 }
 
 module "aks" {
   source              = "./modules/aks"
   resource_group_name = azurerm_resource_group.main.name
-  location            = var.location
+  location            = local.location
   subnet_id           = module.network.subnet_id
   acr_id              = module.acr.acr_id
   private_dns_zone_id = module.dns.dns_zone_id
-  cluster_name        = var.cluster_name
+  cluster_name        = local.cluster_name
 }

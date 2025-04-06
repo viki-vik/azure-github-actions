@@ -16,8 +16,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   api_server_access_profile {
-    enable_private_cluster    = true
-    private_dns_zone_id       = var.private_dns_zone_id
+    enable_private_cluster = true
+    private_dns_zone_id    = var.private_dns_zone_id
   }
 
   network_profile {

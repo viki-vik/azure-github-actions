@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 
 env:
-  ACR_NAME: youracrname
-  CLUSTER_NAME: myAKSCluster
+  ACR_NAME: nextjs-acr
+  CLUSTER_NAME: nextjs-dev-aks
   RG: aks-rg
   APP_NAME: nextjsbasicapp
 

@@ -19,11 +19,11 @@ This repository provides a **secure deployment pipeline** using:
 .
 ├── .github/workflows/                 #  CI/CD pipeline
 │   └── deploy-aks.yaml                # Terraform provisioning + tfsec + Ingress install
-│   └── deploy.yaml                    # App CI/CD + image scanning + Helm (TLS noy added yet)
-├── app/                               # Forked Next.js app (Dockerized)
+│   └── deploy.yaml                    # App CI/CD + image scanning + Helm ( + TLS can be enabled later with cert-manager)
+├── nextjsbasicapp/                    # Forked Next.js app (Dockerized)
 │   └── Dockerfile
 ├── helm/
-│   └── nextjsapp/                     # Helm chart for app deployment
+│   └── nextjsapp/                     # Helm chart for nextjs app deployment
 ├── infra/                             # Terraform infrastructure
 │   ├── main.tf
 │   ├── outputs.tf
@@ -49,7 +49,7 @@ DevSecOps practices: minimal permissions, secret injection, image scanning
 
 ## Prerequisites
 Azure CLI (az)
-Terraform >= 1.5
+Terraform >= 1.9
 Docker
 Helm
 GitHub repo + GitHub Actions Runner

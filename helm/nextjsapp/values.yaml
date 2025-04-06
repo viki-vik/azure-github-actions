@@ -1,5 +1,5 @@
 image:
-  repository: <YOUR_ACR_NAME>.azurecr.io/nextjsbasicapp
+  repository: nextjs-acr.azurecr.io/nextjsbasicapp
   tag: latest
   pullPolicy: Always
 
@@ -17,8 +17,11 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
   hosts:
-    - host: nextjs.example.internal  # Replace with your internal DNS name
+    - host: nextjs.aks.private.local
       paths:
         - path: /
           pathType: Prefix
-  tls: [] # Can be enabled later with cert-manager
+  tls:
+    - secretName: nextjsapp-tls
+      hosts:
+        - nextjs.aks.private.local
