@@ -17,7 +17,7 @@ This repository provides a **secure deployment pipeline** using:
 
 ```plaintext
 .
-├── .github/workflows/                 #  CI/CD pipeline
+├── .github/workflows/                 # CI/CD pipeline
 │   └── deploy-aks.yaml                # Terraform provisioning + tfsec + Ingress install
 │   └── deploy.yaml                    # App CI/CD + image scanning + Helm ( + TLS can be enabled later with cert-manager)
 ├── nextjsbasicapp/                    # Forked Next.js app (Dockerized)
@@ -37,22 +37,21 @@ This repository provides a **secure deployment pipeline** using:
 ```
 
 ## Features
-Private AKS cluster — no public API access
-ACR integrated with AKS via managed identity
-Private DNS zone for control plane resolution
-NGINX Ingress Controller on AKS
-Secure CI/CD pipeline with Docker image scanning
-Helm-based deployment with rollback/versioning
-App deployed via GitHub Actions from code changes
-
-DevSecOps practices: minimal permissions, secret injection, image scanning
+* Private AKS cluster — no public API access
+* ACR integrated with AKS via managed identity
+* Private DNS zone for control plane resolution
+* NGINX Ingress Controller on AKS
+* Secure CI/CD pipeline with Docker image scanning
+* Helm-based deployment with rollback/versioning
+* App deployed via GitHub Actions from code changes
+* DevSecOps practices: minimal permissions, secret injection, image scanning
 
 ## Prerequisites
-Azure CLI (az)
-Terraform >= 1.9
-Docker
-Helm
-GitHub repo + GitHub Actions Runner
+- Azure CLI (az)
+- Terraform >= 1.9
+- Docker
+- Helm
+- GitHub repo + GitHub Actions Runner
 
 #### Setup Azure Credentials for GitHub Actions
 1. Create Azure Service Principal:
@@ -60,23 +59,23 @@ GitHub repo + GitHub Actions Runner
 ```bash
 az ad sp create-for-rbac --name "gh-aks-deployer" \
   --role contributor \
-  --scopes /subscriptions/<your-subscription-id> \
+  --scopes /subscriptions/<subscription-id> \
   --sdk-auth
 ```
 
 2. Save output to GitHub Secrets:
 
-Go to your GitHub repo → Settings → Secrets → Actions.
-Create secret `AZURE_CREDENTIALS` with full JSON output
+- Go to your GitHub repo → Settings → Secrets → Actions.
+- Create secret `AZURE_CREDENTIALS` with full JSON output
 
 ## Deploy Infrastructure by Manual Trigger
-To run the Azure infrastructure provisioning pipeline go to GitHub repo → Actions → Deploy AKS with ACR and Ingress and click Run workflow. This will provision on Azure:
+Go to GitHub repo → Actions → Deploy AKS with ACR and Ingress and click Run workflow. This will provision on Azure:
 
-Resource group
-VNet, Subnet
-ACR
-AKS cluster (private)
-Private DNS zone
+- Resource group
+- VNet, Subnet
+- ACR
+- AKS cluster (private)
+- Private DNS zone
 
 ##### Monitor Deployment Progress
 Watch the live logs in GitHub Actions:
@@ -104,14 +103,20 @@ kubectl get ingress
 ## GitHub Actions CI/CD Flow
 Deploys the Next.js app with Helm Chart
 ##### What It Does:
-Logs into Azure and ACR
-Scans Docker image using Trivy
-Builds and tags Docker image with a timestamp
-Pushes image to ACR
-Pulls AKS credentials
-Deploys the app using Helm (with versioned tag)
+- Logs into Azure and ACR
+- Scans Docker image using Trivy
+- Builds and tags Docker image with a timestamp
+- Pushes image to ACR
+- Pulls AKS credentials
+- Deploys the app using Helm (with versioned tag)
 
 ##### Secure Features:
-Uses GitHub Secrets for auth
-Runs vulnerability scan
-Versioned tagging for rollback
+
+| Practice                   | Details                                                              |
+|----------------------------|----------------------------------------------------------------------|
+| Image Scanning             | Trivy used to scan Docker images for vulnerabilities                 |
+| Least-privileged Azure SP  | Scoped SP with Contributor only on subscription                      |
+| Secrets Management         | Stored in GitHub Secrets                                             |
+| No Public AKS API Access   | Cluster is private with Private DNS zone                             |
+| CI/CD Hardening            | Uses GitHub-hosted runners with environment isolation                |
+| Helm Rollback              | Versioned tags allow safe rollback of deployments                    |
