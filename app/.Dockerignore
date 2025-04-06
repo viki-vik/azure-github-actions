@@ -1,0 +1,42 @@
+# Node dependencies
+node_modules
+.npm
+.yarn
+.pnpm-store
+
+# Build output
+.next
+dist
+out
+
+# Logs
+*.log
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env and config
+.env
+.env.*.local
+*.local
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# IDEs
+.vscode
+.idea
+*.swp
+
+# Docker
+Dockerfile*
+.dockerignore
+
+# CI/CD
+.github/
