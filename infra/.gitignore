@@ -1,0 +1,35 @@
+# ========================
+# Terraform State Files
+# ========================
+*.tfstate
+*.tfstate.backup
+*.tfstate.*
+
+# Local Terraform directory (provider binaries, plugins, etc.)
+.terraform/
+
+# Terraform Lock file (optional)
+.terraform.lock.hcl
+
+# Terraform Plan files
+*.tfplan
+
+# Crash logs
+crash.log
+
+# Sensitive variable definitions
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Override files (can be used locally)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# IDE junk / editor cache
+*.swp
+*.swo
+.DS_Store
+.idea/
+.vscode/

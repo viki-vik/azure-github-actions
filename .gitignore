@@ -1,0 +1,76 @@
+# --------------------------
+# Node / App Dev
+# --------------------------
+node_modules/
+.yarn/
+.next/
+out/
+dist/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env
+.env
+.env.*.local
+*.local
+
+# --------------------------
+# Terraform
+# --------------------------
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+crash.log
+
+# Ignore Terraform plan file (optional)
+plan.tfplan
+
+# --------------------------
+# Helm / K8s
+# --------------------------
+*.tgz
+helm-chart-output/
+.kube/
+*.cert
+*.key
+
+# --------------------------
+# Docker
+# --------------------------
+.dockerignore
+Dockerfile*
+docker-compose.yml
+docker-compose.override.yml
+
+# --------------------------
+# GitHub Actions cache
+# --------------------------
+.github/workflows/*.bak
+.github/workflows/*.tmp
+
+# --------------------------
+# Editor & OS junk
+# --------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.bak
+*~
+
+# --------------------------
+# Logs
+# --------------------------
+logs/
+*.log
+
+# --------------------------
+# Misc
+# --------------------------
+*.pid
+*.seed
