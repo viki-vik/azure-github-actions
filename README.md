@@ -69,7 +69,7 @@ az ad sp create-for-rbac --name "gh-aks-deployer" \
 - Create secret `AZURE_CREDENTIALS` with full JSON output
 
 ## Deploy Infrastructure by Manual Trigger
-Go to GitHub repo → Actions → Deploy AKS with ACR and Ingress and click Run workflow. This will provision on Azure:
+Go to GitHub repo → **Actions** → **Deploy AKS with ACR and Ingress** and click **Run workflow**. This will provision on Azure:
 
 - Resource group
 - VNet, Subnet
@@ -79,9 +79,9 @@ Go to GitHub repo → Actions → Deploy AKS with ACR and Ingress and click Run 
 
 ##### Monitor Deployment Progress
 Watch the live logs in GitHub Actions:
-Navigate to the Actions tab
-Click "Deploy AKS with ACR and Ingress"
-View logs for each step: Terraform init, apply, etc.
+- Navigate to the Actions tab
+- Click "Deploy AKS with ACR and Ingress"
+- View logs for each step: Terraform init, apply, etc.
 
 ##### Validate Ingress Controller on AKS
 After deployment:
@@ -110,7 +110,7 @@ Deploys the Next.js app with Helm Chart
 - Pulls AKS credentials
 - Deploys the app using Helm (with versioned tag)
 
-##### Secure Features:
+# Secure Features:
 
 | Practice                   | Details                                                              |
 |----------------------------|----------------------------------------------------------------------|
