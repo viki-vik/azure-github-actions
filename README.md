@@ -17,7 +17,9 @@ This repository provides a **secure deployment pipeline** using:
 
 ```plaintext
 .
-├── .github/workflows/deploy.yml       # Secure CI/CD pipeline
+├── .github/workflows/                 #  CI/CD pipeline
+│   └── deploy-aks.yaml                # Terraform provisioning + tfsec + Ingress install
+│   └── deploy.yaml                    # App CI/CD + image scanning + Helm (TLS noy added yet)
 ├── app/                               # Forked Next.js app (Dockerized)
 │   └── Dockerfile
 ├── helm/
@@ -31,7 +33,8 @@ This repository provides a **secure deployment pipeline** using:
 │       ├── aks/
 │       ├── dns/
 │       └── network/
-└── README.md                          # This file
+└── README.md
+```
 
 ## Features
 Private AKS cluster — no public API access
@@ -59,6 +62,7 @@ az ad sp create-for-rbac --name "gh-aks-deployer" \
   --role contributor \
   --scopes /subscriptions/<your-subscription-id> \
   --sdk-auth
+```
 
 2. Save output to GitHub Secrets:
 
@@ -86,12 +90,14 @@ After deployment:
 ```bash
 kubectl get pods -n ingress-nginx
 kubectl get svc -n ingress-nginx
+```
 
 You should see a LoadBalancer service with internal IP (e.g. 10.0.x.x)
 Verify app’s ingress with:
 
 ```bash
 kubectl get ingress
+```
 
 #####  Deploy Application 
 
@@ -109,5 +115,3 @@ Deploys the app using Helm (with versioned tag)
 Uses GitHub Secrets for auth
 Runs vulnerability scan
 Versioned tagging for rollback
-
-
